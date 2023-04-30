@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./style.css";
+import "../style.css";
 
 const initialFacts = [
   {
@@ -82,11 +82,6 @@ function Header(props) {
     </header>
   );
 }
-
-function NewFactForm() {
-  return <form className="fact-form">Fact Form</form>;
-}
-
 const CATEGORIES = [
   { name: "technology", color: "#3b82f6" },
   { name: "science", color: "#16a34a" },
@@ -97,6 +92,10 @@ const CATEGORIES = [
   { name: "history", color: "#f97316" },
   { name: "news", color: "#8b5cf6" },
 ];
+
+function NewFactForm() {
+  return <form className="fact-form">Fact Form</form>;
+}
 
 function CategoryFilter() {
   return (
