@@ -1,7 +1,9 @@
 const btn_shareFact = document.querySelector(".btn-share");
 const form = document.querySelector("form");
-console.log(btn_shareFact);
+const factsList = document.querySelector(".facts-list");
 
+factsList.innerHTML = "";
+factsList.insertAdjacentHTML("afterbegin", "<li>Tommy</li>");
 btn_shareFact.addEventListener("click", function () {
   let state = form.classList.toggle("hidden");
   console.log(state);
