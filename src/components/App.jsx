@@ -1,15 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../style.css";
+import supabase from "../supabase";
 
-import { initialFacts } from "../data";
 import Header from "./Header";
 import NewFactForm from "./NewFactForm";
 import CategoryFilter from "./CategoryFilter";
 import FactList from "./FactList";
+import Loader from "./Loader";
 
 function App() {
   const [shownForm, setShowForm] = useState(false);
-  const [facts, setFacts] = useState(initialFacts);
+  const [facts, setFacts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(function () {
+    async function getFacts() {
+      setIsLoading(true);
+      const { data: facts, error } = await supabase
+        .from("facts")
+        .select("*")
+        .order("votesInteresting", { ascending: false })
+        .limit(1000);
+      setFacts(facts);
+      setIsLoading(false);
+    }
+    getFacts();
+  }, []);
 
   return (
     <>
@@ -19,7 +35,7 @@ function App() {
       ) : null}
       <main className="main">
         <CategoryFilter />
-        <FactList facts={facts} />
+        {isLoading ? <Loader /> : <FactList facts={facts} />}
       </main>
     </>
   );
