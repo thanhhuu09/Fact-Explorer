@@ -10,9 +10,9 @@ body {
   padding: 48px 64px;
 }
 
-.hidden {
+/* .hidden {
   display: none !important;
-}
+} */
 
 /* MAIN LAYOUT */
 #root {
@@ -45,6 +45,11 @@ body {
   font-size: 18px;
   color: inherit;
   font-family: inherit;
+}
+
+select > :first-child {
+  font-weight: 800;
+  font-size: 1.2rem;
 }
 
 .fact-form input::placeholder {
@@ -158,16 +163,6 @@ h1 {
 
 ul {
   list-style: none;
-}
-
-.technology {
-  background-color: #3b82f6;
-}
-.society {
-  background-color: #eab308;
-}
-.science {
-  background-color: #16a34a;
 }
 
 .source:link,
