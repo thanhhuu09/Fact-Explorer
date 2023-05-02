@@ -1,7 +1,9 @@
 import Fact from "./Fact";
 function FactList(props) {
   const { facts } = props;
-
+  if (facts.length === 0) {
+    return <p className="message">No facts for this category yet :((</p>;
+  }
   return (
     <>
       <section>
