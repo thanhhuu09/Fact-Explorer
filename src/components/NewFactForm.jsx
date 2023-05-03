@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CATEGORIES } from "../data";
+import supabase from "../supabase";
 
 function isValidUrl(urlString) {
   var inputElement = document.createElement("input");
@@ -19,9 +20,11 @@ function NewFactForm(props) {
   const [text, setText] = useState("");
   const [source, setSource] = useState("");
   const [category, setCategory] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+
   const textLength = text.length;
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     // 1. Prevent browser reload
     event.preventDefault();
     // 2. Check if the data is valid. If so, create a new fact
@@ -29,18 +32,30 @@ function NewFactForm(props) {
       console.log("Valid text");
 
       // 3. Create a new fact object
-      const newFact = {
-        id: Math.round(Math.random * 10000000),
-        text: text,
-        source: source,
-        category: category,
-        votesInteresting: 0,
-        votesMindblowing: 0,
-        votesFalse: 0,
-        createdIn: new Date().getFullYear(),
-      };
+      // const newFact = {
+      //   id: Math.round(Math.random * 10000000),
+      //   text: text,
+      //   source: source,
+      //   category: category,
+      //   votesInteresting: 0,
+      //   votesMindblowing: 0,
+      //   votesFalse: 0,
+      //   createdIn: new Date().getFullYear(),
+      // };
+
+      // 3. Upload a new fact to Supabase and receive the new fact object
+      setIsUploading(true);
+      const { data: newFact, error } = await supabase
+        .from("facts")
+        .insert([{ text, source, category }])
+        .select();
+      setIsUploading(false);
+      console.log(newFact);
+
       // 4. Add a new fact to the UI: add the fact to state
-      setFacts((facts) => [newFact, ...facts]);
+      if (!error) {
+        setFacts((facts) => [newFact[0], ...facts]);
+      }
 
       // 5.Reset input fields
       setText("");
@@ -58,6 +73,7 @@ function NewFactForm(props) {
         placeholder="Share the fact with the world..."
         value={text}
         onChange={(event) => setText(event.target.value.toString())}
+        disabled={isUploading}
       />
       <span>{200 - textLength}</span>
       <input
@@ -65,10 +81,12 @@ function NewFactForm(props) {
         placeholder="Trustworthy source..."
         value={source}
         onChange={(event) => setSource(event.target.value.toString())}
+        disabled={isUploading}
       />
       <select
         value={category}
         onChange={(event) => setCategory(event.target.value.toString())}
+        disabled={isUploading}
       >
         <option value="">Choose category</option>
         {CATEGORIES.map((cat) => (
@@ -77,7 +95,9 @@ function NewFactForm(props) {
           </option>
         ))}
       </select>
-      <button className="btn btn-large">Post</button>
+      <button className="btn btn-large" disabled={isUploading}>
+        Post
+      </button>
     </form>
   );
 }

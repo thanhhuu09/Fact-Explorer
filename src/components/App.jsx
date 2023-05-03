@@ -50,7 +50,11 @@ function App() {
 
       <main className="main">
         <CategoryFilter setCurrentCategoty={setCurrentCategoty} />
-        {isLoading ? <Loader /> : <FactList facts={facts} />}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <FactList facts={facts} setFacts={setFacts} />
+        )}
       </main>
     </>
   );
