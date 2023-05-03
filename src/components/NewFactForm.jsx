@@ -31,18 +31,6 @@ function NewFactForm(props) {
     if (text && isValidUrl(source) && category && textLength <= 200) {
       console.log("Valid text");
 
-      // 3. Create a new fact object
-      // const newFact = {
-      //   id: Math.round(Math.random * 10000000),
-      //   text: text,
-      //   source: source,
-      //   category: category,
-      //   votesInteresting: 0,
-      //   votesMindblowing: 0,
-      //   votesFalse: 0,
-      //   createdIn: new Date().getFullYear(),
-      // };
-
       // 3. Upload a new fact to Supabase and receive the new fact object
       setIsUploading(true);
       const { data: newFact, error } = await supabase
@@ -61,6 +49,7 @@ function NewFactForm(props) {
       setText("");
       setSource("");
       setCategory("");
+
       // 6. Close the form
       setShowForm(false);
     }
