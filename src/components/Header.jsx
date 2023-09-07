@@ -1,6 +1,6 @@
 function Header(props) {
   const { setShowForm, shownForm } = props;
-  const appTitle = "Học gì hôm nay...";
+  const appTitle = "Fact Explorer";
 
   return (
     <header className="header">
