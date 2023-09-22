@@ -1,5 +1,5 @@
 # Getting Started with Create React App
-# You could check the demo in here: https://hocgihomnay-thanhhuu.netlify.app/
+# You can check the demo here: https://factexplorer.netlify.app/
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
